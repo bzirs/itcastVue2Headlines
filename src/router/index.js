@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-22 21:15:29
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-22 22:42:30
+ * @LastEditTime: 2022-12-22 22:55:56
  * @FilePath: /vue2-itcast-headlines/src/router/index.js
  * @Description: 路由
  * @
@@ -15,8 +15,18 @@ Vue.use(VueRouter)
 
 const routes = [
   { path: '/', redirect: '/layout' },
-  { path: '/layout', component: () => import('@/views/Layout'), name: 'layout' },
-  { path: '/user', component: () => import('@/views/User'), name: 'user' },
+  {
+    path: '/layout',
+    component: () => import('@/views/Layout'),
+    name: 'layout',
+    children: [
+      { path: '/', redirect: '/layout/home' },
+      { path: '/layout/home', component: () => import('@/views/Home'), name: 'home' },
+      { path: '/layout/question', component: () => import('@/views/Question'), name: 'question' },
+      { path: '/layout/video', component: () => import('@/views/Video'), name: 'video' },
+      { path: '/layout/user', component: () => import('@/views/User'), name: 'user' }
+    ]
+  },
   { path: '/login', component: () => import('@/views/Login'), name: 'login' },
   { path: '/register', component: () => import('@/views/Register'), name: 'register' },
   { path: '/search', component: () => import('@/views/Search'), name: 'search' }
