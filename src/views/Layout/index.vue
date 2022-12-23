@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-22 21:28:57
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-22 23:00:58
+ * @LastEditTime: 2022-12-23 21:36:51
  * @FilePath: /vue2-itcast-headlines/src/views/Layout/index.vue
  * @Description: Layout.vue
  *
@@ -14,7 +14,7 @@
     <router-view />
 
     <!-- 底部导航栏 -->
-    <van-tabbar route>
+    <van-tabbar route placeholder>
       <van-tabbar-item replace to="/layout/home" icon="home-o">首页</van-tabbar-item>
       <van-tabbar-item replace to="/layout/question" icon="chat-o">问答</van-tabbar-item>
       <van-tabbar-item replace to="/layout/video" icon="video-o">视频</van-tabbar-item>
@@ -43,4 +43,5 @@ export default {
 </script>
 
 <style scoped lang='scss'>
+
 </style>
