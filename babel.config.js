@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-22 21:15:29
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-22 22:43:41
+ * @LastEditTime: 2022-12-23 16:04:00
  * @FilePath: /vue2-itcast-headlines/babel.config.js
  * @Description:
  * @
@@ -13,10 +13,15 @@ module.exports = {
     '@vue/cli-plugin-babel/preset'
   ],
   plugins: [
-    ['import', {
-      libraryName: 'vant',
-      libraryDirectory: 'es',
-      style: true
-    }, 'vant']
+    [
+      'import',
+      {
+        libraryName: 'vant',
+        libraryDirectory: 'es',
+        // 指定样式路径
+        style: (name) => `${name}/style/less`
+      },
+      'vant'
+    ]
   ]
 }
