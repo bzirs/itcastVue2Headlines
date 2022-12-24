@@ -2,18 +2,14 @@
  * @Author: bzirs
  * @Date: 2022-12-24 15:51:39
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-24 18:23:49
+ * @LastEditTime: 2022-12-24 21:23:20
  * @FilePath: /vue2-itcast-headlines/src/components/home/ChannelEdit.vue
  * @Description: 使用vant组件实现
  *
  * Copyright (c) 2022 by bzirs, All Rights Reserved.
 -->
 <template>
-  <van-popup
-    v-model="show"
-    get-container="#app"
-    class="edit-channel"
-  >
+  <van-popup v-model="show" get-container="#app" class="edit-channel">
     <!-- 顶部栏 -->
     <van-nav-bar
       placeholder
@@ -27,23 +23,22 @@
     </van-nav-bar>
 
     <!-- 我的频道 -->
-    <channel-edit-item>
+    <channel-edit-item :flag="flag" :list="list">
       <template #left>
         <span class="custom-title">我的频道</span>
         <span class="go-channel">点击进入频道</span>
       </template>
       <template #right>
-        <span>编辑</span>
+        <span @click="flag = !flag">编辑</span>
       </template>
     </channel-edit-item>
 
     <!-- 添加频道 -->
-    <channel-edit-item>
+    <channel-edit-item :list="notSelectChannel">
       <template #left>
         <span class="custom-title">点击添加更多频道：</span>
       </template>
     </channel-edit-item>
-
   </van-popup>
 </template>
 
@@ -64,7 +59,10 @@ export default {
     }
   },
   data () {
-    return {}
+    return {
+      // 显示左上叉叉
+      flag: false
+    }
   },
   async created () {},
   mounted () {},
