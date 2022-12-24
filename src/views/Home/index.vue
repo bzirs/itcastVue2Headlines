@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-22 21:29:39
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-24 18:04:06
+ * @LastEditTime: 2022-12-24 22:31:54
  * @FilePath: /vue2-itcast-headlines/src/views/Home/index.vue
  * @Description: Home.vue
  *
@@ -16,7 +16,7 @@
       <van-nav-bar placeholder fixed title="黑马头条" right-text="搜索" @click-right="onNavClickRight" />
 
       <!-- 频道列表 -->
-      <van-tabs @click="changeTab">
+      <van-tabs swipeable @click="changeTab" ref="vanTabs">
         <van-tab v-for="it in channelList" :title="it.name" :key="it.id">
           <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
             <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
@@ -145,6 +145,7 @@ export default {
     },
     // 改变tabs事件
     changeTab (e) {
+      console.log(e)
       this.articleListObj = {
         channel_id: e,
         timestamp: Date.now()

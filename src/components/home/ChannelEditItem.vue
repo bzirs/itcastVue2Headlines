@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-24 16:52:02
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-24 21:22:04
+ * @LastEditTime: 2022-12-24 22:31:39
  * @FilePath: /vue2-itcast-headlines/src/components/home/ChannelEditItem.vue
  * @Description:
  *
@@ -23,7 +23,7 @@
 
     <!-- 频道列表 -->
     <van-grid :gutter="10">
-      <van-grid-item v-for="item in list" :key="item.id" :text="item.name">
+      <van-grid-item @click.native="toChangeChannelList(item.id)" v-for="item in list" :key="item.id" :text="item.name">
         <template #icon>
           <div class="icon-right" v-if="flag">
             <van-icon name="cross" />
@@ -44,6 +44,9 @@ export default {
     },
     flag: {
       type: Boolean
+    },
+    selectList: {
+      type: Array
     }
   },
   data () {
@@ -54,7 +57,18 @@ export default {
   mounted () {},
   activated () {},
   updated () {},
-  methods: {},
+  methods: {
+    toChangeChannelList (id) {
+      console.log(id)
+      const index = this.selectList.findIndex(ele => ele.id === id)
+      console.log(index)
+      // console.log(this.$parent.$parent.$parent.changeTab)
+      this.$parent.$parent.$parent.changeTab(id)
+      console.log(this.$parent.$parent.$parent.$refs.vanTabs)
+      this.$parent.$parent.$parent.$refs.vanTabs.scrollTo(id)
+      this.$parent.$parent.$parent.channelShow = false
+    }
+  },
   computed: {},
   watch: {},
   directives: {}
