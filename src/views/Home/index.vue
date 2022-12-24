@@ -2,75 +2,86 @@
  * @Author: bzirs
  * @Date: 2022-12-22 21:29:39
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-23 22:51:44
+ * @LastEditTime: 2022-12-24 18:04:06
  * @FilePath: /vue2-itcast-headlines/src/views/Home/index.vue
  * @Description: Home.vue
  *
  * Copyright (c) 2022 by bzirs, All Rights Reserved.
 -->
 <template>
-  <div class=''>
-    <!-- 顶部栏 -->
-    <van-nav-bar placeholder fixed title="黑马头条" right-text="搜索" @click-right="onNavClickRight" />
+  <div class="">
+    <!-- 首页 -->
+    <div>
+      <!-- 顶部栏 -->
+      <van-nav-bar placeholder fixed title="黑马头条" right-text="搜索" @click-right="onNavClickRight" />
 
-    <!-- 频道列表 -->
-    <van-tabs @click="changeTab">
-      <van-tab v-for="it in channelList" :title="it.name" :key="it.id">
-        <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
-          <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-            <van-cell-group v-for="(it, i) in articleList" :key="it.art_id">
-              <van-cell>
-                <template #title>
-                  <div class="cell-title">
-                    <span>{{ it.title }}</span>
-                    <div v-if="it.cover.type === 1">
-                      <van-image lazy-load width="112" height="70" :src="it.cover.images[0]" />
+      <!-- 频道列表 -->
+      <van-tabs @click="changeTab">
+        <van-tab v-for="it in channelList" :title="it.name" :key="it.id">
+          <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
+            <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+              <van-cell-group v-for="(it, i) in articleList" :key="it.art_id">
+                <van-cell>
+                  <template #title>
+                    <div class="cell-title">
+                      <span>{{ it.title }}</span>
+                      <div v-if="it.cover.type === 1">
+                        <van-image lazy-load width="112" height="70" :src="it.cover.images[0]" />
+                      </div>
                     </div>
-                  </div>
-                  <div class="cell-img" v-if="it.cover.type === 3">
-                    <van-image lazy-load v-for="(item, i) in it.cover.images" :key="i" width="112" height="70"
-                      :src="item" />
-                  </div>
-                </template>
-                <template #label>
-                  <div class="cell-label">
-                    <span>{{ it.aut_name }}&nbsp;&nbsp;{{ it.comm_count }}&nbsp;评论&nbsp;&nbsp;{{ it.pubdate |
-                        relativeTime
-                    }}</span>
-                    <van-icon name="cross" @click="toOpenInterest(it.art_id, i)" />
-                  </div>
-                </template>
-              </van-cell>
-            </van-cell-group>
-          </van-list>
-        </van-pull-refresh>
-      </van-tab>
-    </van-tabs>
-    <!-- 频道右侧按钮 -->
-    <div class="tabsleft" @click="toChannel">
-      <van-icon name="plus" />
+                    <div class="cell-img" v-if="it.cover.type === 3">
+                      <van-image lazy-load v-for="(item, i) in it.cover.images" :key="i" width="112" height="70" :src="item" />
+                    </div>
+                  </template>
+                  <template #label>
+                    <div class="cell-label">
+                      <span>{{ it.aut_name }}&nbsp;&nbsp;{{ it.comm_count }}&nbsp;评论&nbsp;&nbsp;{{ it.pubdate | relativeTime }}</span>
+                      <van-icon name="cross" @click="toOpenInterest(it.art_id, i)" />
+                    </div>
+                  </template>
+                </van-cell>
+              </van-cell-group>
+            </van-list>
+          </van-pull-refresh>
+        </van-tab>
+      </van-tabs>
+      <!-- 频道右侧按钮 -->
+      <div class="tabsleft" @click="toChannel">
+        <van-icon name="plus" />
+      </div>
     </div>
+
+    <!-- 编辑频道组件 -->
+    <!-- <channel v-model="channelShow"></channel> -->
+    <channel-edit v-model="channelShow" :allList="channelAll" :list="channelList" ></channel-edit>
 
     <!-- 不感兴趣和反馈 -->
     <van-action-sheet v-model="show" :actions="actions" cancel-text="取消" close-on-click-action @select="toSelect" />
-
-    <!-- 反馈列表 -->
-
   </div>
 </template>
 
 <script>
-import { getHomeArticleList, getHomeChannelList, toReport, toUninterested } from '@/api/home'
+import { getHomeArticleList, getGuestChannerList, toReport, toUninterested, getHomeChannelList } from '@/api/home'
+
+// import channel from '@/components/home/Channel.vue'
+import ChannelEdit from '@/components/home/ChannelEdit.vue'
 
 import { feedbackList, interestActions } from '@/constant/reports'
 
 export default {
   name: 'HomePage',
-  components: {},
+  components: {
+    ChannelEdit
+    // channel
+  },
   props: {},
   data () {
     return {
-
+      // 编辑频道显示隐藏
+      // channelShow: 'none',
+      channelShow: false,
+      // 所有频道列表
+      channelAll: [],
       // 频道列表
       channelList: [],
       // 获取文章列表
@@ -95,7 +106,9 @@ export default {
   },
   async created () {
     // 获取频道列表
-    const { data: { channels } } = await getHomeChannelList()
+    const {
+      data: { channels }
+    } = await getGuestChannerList()
     this.channelList = channels
   },
   mounted () {},
@@ -104,7 +117,9 @@ export default {
   methods: {
     // 加载事件
     async onLoad () {
-      const { data: { pre_timestamp: timestamp, results } } = await getHomeArticleList(this.articleListObj)
+      const {
+        data: { pre_timestamp: timestamp, results }
+      } = await getHomeArticleList(this.articleListObj)
       this.articleListObj.timestamp = timestamp
       this.articleList.push(...results)
       // 加载状态结束
@@ -118,8 +133,15 @@ export default {
       console.log(111)
     },
     // 去频道页
-    toChannel () {
-      console.log(111)
+    async toChannel () {
+      // this.$refs.editChannel.style.display = 'block'
+      const { data: { channels } } = await getHomeChannelList()
+      this.channelAll = channels
+
+      // this.channelShow = 'block'
+      this.channelShow = true
+
+      console.log(11)
     },
     // 改变tabs事件
     changeTab (e) {
@@ -179,16 +201,15 @@ export default {
     // 选择相关反馈
     toSelectFeedback () {}
   },
-  computed: {
-  },
+  computed: {},
   watch: {},
   directives: {}
 }
 </script>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 ::v-deep .van-nav-bar__title {
-  color: #fff
+  color: #fff;
 }
 
 ::v-deep .van-tabs__content {
@@ -197,21 +218,18 @@ export default {
 
 ::v-deep .van-nav-bar__right {
   .van-nav-bar__text {
-    color: #fff
+    color: #fff;
   }
 }
 
 ::v-deep .van-tabs--line {
-
   .van-tabs__wrap {
     position: fixed;
     width: 100%;
     z-index: 1;
 
     .van-tabs__nav--complete {
-
       padding-right: 35px;
-
     }
   }
 }
@@ -252,4 +270,5 @@ export default {
 ::v-deep .van-pull-refresh {
   overflow: visible !important;
 }
+
 </style>

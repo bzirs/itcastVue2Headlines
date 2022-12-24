@@ -1,0 +1,121 @@
+<!--
+ * @Author: bzirs
+ * @Date: 2022-12-24 15:51:39
+ * @LastEditors: bzirs
+ * @LastEditTime: 2022-12-24 18:23:49
+ * @FilePath: /vue2-itcast-headlines/src/components/home/ChannelEdit.vue
+ * @Description: 使用vant组件实现
+ *
+ * Copyright (c) 2022 by bzirs, All Rights Reserved.
+-->
+<template>
+  <van-popup
+    v-model="show"
+    get-container="#app"
+    class="edit-channel"
+  >
+    <!-- 顶部栏 -->
+    <van-nav-bar
+      placeholder
+      fixed
+      title="频道管理"
+      @click-right="$emit('input', false)"
+    >
+      <template #right>
+        <van-icon name="cross" size="20" />
+      </template>
+    </van-nav-bar>
+
+    <!-- 我的频道 -->
+    <channel-edit-item>
+      <template #left>
+        <span class="custom-title">我的频道</span>
+        <span class="go-channel">点击进入频道</span>
+      </template>
+      <template #right>
+        <span>编辑</span>
+      </template>
+    </channel-edit-item>
+
+    <!-- 添加频道 -->
+    <channel-edit-item>
+      <template #left>
+        <span class="custom-title">点击添加更多频道：</span>
+      </template>
+    </channel-edit-item>
+
+  </van-popup>
+</template>
+
+<script>
+import ChannelEditItem from './ChannelEditItem.vue'
+export default {
+  name: 'ChannelEdit',
+  components: { ChannelEditItem },
+  props: {
+    value: {
+      type: Boolean
+    },
+    allList: {
+      type: Array
+    },
+    list: {
+      type: Array
+    }
+  },
+  data () {
+    return {}
+  },
+  async created () {},
+  mounted () {},
+  activated () {},
+  updated () {},
+  methods: {
+    // 获取dom挂载
+    getContainer () {}
+  },
+  computed: {
+    // 显示隐藏
+    show: {
+      get () {
+        return this.value
+      },
+      set (val) {
+        console.log(val)
+      }
+    },
+
+    // 未选择的频道
+    notSelectChannel () {
+      return this.allList.filter(
+        (ele) => this.list.findIndex((e) => e.id === ele.id) === -1
+      )
+    }
+  },
+  watch: {},
+  directives: {}
+}
+</script>
+
+<style scoped lang='scss'>
+.edit-channel {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  transform: translate3d(0, 0, 0);
+}
+
+::v-deep .van-icon {
+  color: #fff;
+}
+.go-channel {
+  margin-left: 5px;
+  color: grey;
+  font-size: 12px;
+}
+::v-deep .van-cell__value {
+  color: #000;
+  font-size: 14px;
+}
+</style>

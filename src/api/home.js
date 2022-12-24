@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-23 17:13:25
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-23 22:46:45
+ * @LastEditTime: 2022-12-24 17:10:34
  * @FilePath: /vue2-itcast-headlines/src/api/home.js
  * @Description: api home.js
  * @
@@ -11,8 +11,11 @@
 
 import request from '@/utils/request'
 
-// 获取频道列表
+// 获取全部频道列表
 export const getHomeChannelList = _ => request.get('/v1_0/channels')
+
+// 获取游客频道列表
+export const getGuestChannerList = _ => request.get('/v1_0/user/channels')
 
 // 获取文章列表
 export const getHomeArticleList = obj => request.get('/v1_0/articles', { params: obj })

@@ -2,12 +2,17 @@
  * @Author: bzirs
  * @Date: 2022-12-22 21:15:29
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-23 16:07:06
+ * @LastEditTime: 2022-12-24 09:07:24
  * @FilePath: /vue2-itcast-headlines/vue.config.js
  * @Description:
  * @
  * @Copyright (c) 2022 by bzirs, All Rights Reserved.
  */
+
+const port = process.env.port || 8989
+
+// const open = true
+
 const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
   transpileDependencies: true,
@@ -21,6 +26,15 @@ module.exports = defineConfig({
             'nav-bar-background-color': '#1989fa'
           }
         }
+      }
+    }
+  },
+  devServer: {
+    port,
+    client: {
+      overlay: {
+        warnings: false,
+        errors: true
       }
     }
   }
