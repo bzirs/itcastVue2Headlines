@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-24 16:52:02
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-25 08:49:02
+ * @LastEditTime: 2022-12-25 09:20:51
  * @FilePath: /vue2-itcast-headlines/src/components/home/ChannelEditItem.vue
  * @Description:
  *
@@ -68,9 +68,9 @@ export default {
       const index = this.selectList.findIndex((ele) => ele.id === id)
       console.log(index)
       // console.log(this.$parent.$parent.$parent.changeTab)
-      this.$parent.$parent.$parent.changeTab(id)
-      this.$parent.$parent.$parent.$refs.vanTabs.scrollTo(id)
-      this.$parent.$parent.$parent.channelShow = false
+      // this.$parent.$parent.$parent.changeTab(id)
+      // this.$parent.$parent.$parent.$refs.vanTabs.scrollTo(id)
+      // this.$parent.$parent.$parent.channelShow = false
     }
   },
   computed: {},

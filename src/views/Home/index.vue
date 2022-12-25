@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-22 21:29:39
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-25 09:03:34
+ * @LastEditTime: 2022-12-25 14:50:48
  * @FilePath: /vue2-itcast-headlines/src/views/Home/index.vue
  * @Description: Home.vue
  *
@@ -16,33 +16,12 @@
       <van-nav-bar placeholder fixed title="黑马头条" right-text="搜索" @click-right="onNavClickRight" />
 
       <!-- 频道列表 -->
-      <van-tabs swipeable @click="changeTab" ref="vanTabs">
+      <van-tabs @click="changeTab" ref="vanTabs">
         <van-tab v-for="it in channelList" :title="it.name" :key="it.id">
-          <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
-            <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-              <van-cell-group>
-                <van-cell v-for="(ele, i) in articleList" :key="ele.art_id">
-                  <template #title>
-                    <div class="cell-title">
-                      <span>{{ ele.title }}</span>
-                      <div v-if="ele.cover.type === 1">
-                        <van-image lazy-load width="112" height="70" :src="ele.cover.images[0]" />
-                      </div>
-                    </div>
-                    <div class="cell-img" v-if="ele.cover.type === 3">
-                      <van-image lazy-load v-for="(item, i) in ele.cover.images" :key="i" width="112" height="70" :src="item" />
-                    </div>
-                  </template>
-                  <template #label>
-                    <div class="cell-label">
-                      <span>{{ ele.aut_name }}&nbsp;&nbsp;{{ ele.comm_count }}&nbsp;评论&nbsp;&nbsp;{{ ele.pubdate | relativeTime }}</span>
-                      <van-icon name="cross" @click="toOpenInterest(ele.art_id, i)" />
-                    </div>
-                  </template>
-                </van-cell>
-              </van-cell-group>
-            </van-list>
-          </van-pull-refresh>
+          <keep-alive>
+          <channel-content @openInterest="toOpenInterest"  v-model="articleListObj" :articleList="articleList"></channel-content>
+
+          </keep-alive>
         </van-tab>
       </van-tabs>
       <!-- 频道右侧按钮 -->
@@ -56,22 +35,24 @@
     <channel-edit v-model="channelShow" :allList="channelAll" :list="channelList"></channel-edit>
 
     <!-- 不感兴趣和反馈 -->
-    <van-action-sheet v-model="show" :actions="actions" cancel-text="取消" close-on-click-action @select="toSelect" />
+    <van-action-sheet v-model="show" :actions="actions" cancel-text="取消" close-on-click-action @select="toSelect"  />
   </div>
 </template>
 
 <script>
-import { getHomeArticleList, getGuestChannerList, toReport, toUninterested, getHomeChannelList } from '@/api/home'
+import { getGuestChannerList, toReport, toUninterested, getHomeChannelList } from '@/api/home'
 
 // import channel from '@/components/home/Channel.vue'
 import ChannelEdit from '@/components/home/ChannelEdit.vue'
 
 import { feedbackList, interestActions } from '@/constant/reports'
+import ChannelContent from '@/components/home/ChannelContent.vue'
 
 export default {
   name: 'HomePage',
   components: {
-    ChannelEdit
+    ChannelEdit,
+    ChannelContent
     // channel
   },
   props: {},
@@ -91,12 +72,7 @@ export default {
       },
       // 文章列表
       articleList: [],
-      // 加载flag
-      loading: false,
-      // 加载完毕flag
-      finished: false,
-      // 上拉刷新flag
-      refreshing: false,
+
       // 不感兴趣和反馈相关
       show: false,
       actions: [],
@@ -115,19 +91,6 @@ export default {
   activated () {},
   updated () {},
   methods: {
-    // 加载事件
-    async onLoad () {
-      const {
-        data: { pre_timestamp: timestamp, results }
-      } = await getHomeArticleList(this.articleListObj)
-      this.articleListObj.timestamp = timestamp
-      this.articleList.push(...results)
-      // 加载状态结束
-      this.loading = false
-
-      // 数据全部加载完成
-      if (!timestamp) this.finished = true
-    },
     // 顶部栏右侧搜索按钮
     onNavClickRight () {
       console.log(111)
@@ -142,8 +105,6 @@ export default {
 
       // this.channelShow = 'block'
       this.channelShow = true
-
-      console.log(11)
     },
     // 改变tabs事件
     changeTab (e) {
@@ -152,32 +113,18 @@ export default {
         channel_id: e,
         timestamp: Date.now()
       }
-      this.articleList = []
-      this.onLoad()
+      // this.articleList = []
+      // this.$refs.vanTabs.resize()
+      // this.onLoad()
     },
-    // 下拉刷新事件
-    onRefresh () {
-      // 清空列表数据
-      this.finished = false
-
-      this.articleListObj.timestamp = Date.now()
-      this.articleList = []
-
-      // 重新加载数据
-      // 将 refreshing 设置为 true，表示处于加载状态
-      this.refreshing = true
-      this.onLoad()
-
-      this.refreshing = false
-    },
-    // 是否感兴趣事件
-    toOpenInterest (id, i) {
-      this.articleInfo.index = i
-      this.articleInfo.target = id
+    // 打开是否感兴趣事件
+    toOpenInterest (e) {
+      console.log(111)
+      this.articleInfo = e
       this.actions = interestActions
-
       this.show = true
     },
+
     // 选择是否感兴趣事件
     async toSelect ({ name }, i) {
       if (name === '不感兴趣') {

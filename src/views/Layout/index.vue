@@ -11,8 +11,9 @@
 <template>
   <div class="">
     <!-- 二级路由出口 -->
-    <router-view />
-
+    <keep-alive>
+      <router-view />
+    </keep-alive>
     <!-- 底部导航栏 -->
     <van-tabbar route placeholder>
       <van-tabbar-item replace to="/layout/home" icon="home-o">首页</van-tabbar-item>
@@ -42,6 +43,4 @@ export default {
 }
 </script>
 
-<style scoped lang='scss'>
-
-</style>
+<style scoped lang="scss"></style>
