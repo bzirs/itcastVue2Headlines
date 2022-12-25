@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-22 21:29:39
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-25 17:35:44
+ * @LastEditTime: 2022-12-25 22:48:46
  * @FilePath: /vue2-itcast-headlines/src/views/Home/index.vue
  * @Description: Home.vue
  *
@@ -17,7 +17,7 @@
 
       <!-- 频道列表 -->
       <van-tabs @click="changeTab" ref="vanTabs">
-        <van-tab v-for="it in channelList" :title="it.name" :key="it.id">
+        <van-tab :name="it.id" v-for="it in channelList" :title="it.name" :key="it.id">
           <keep-alive>
           <channel-content ref="channelContent" @openInterest="toOpenInterest"  v-model="articleListObj" :articleList="articleList"></channel-content>
 
