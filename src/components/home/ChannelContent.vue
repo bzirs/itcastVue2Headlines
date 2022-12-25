@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-25 10:42:09
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-25 14:48:42
+ * @LastEditTime: 2022-12-25 16:15:04
  * @FilePath: /vue2-itcast-headlines/src/components/home/ChannelContent.vue
  * @Description: 每个频道内容
  *
@@ -12,25 +12,8 @@
   <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
     <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
       <van-cell-group>
-        <van-cell v-for="(ele, i) in articleList" :key="ele.art_id">
-          <template #title>
-            <div class="cell-title">
-              <span>{{ ele.title }}</span>
-              <div v-if="ele.cover.type === 1">
-                <van-image lazy-load width="112" height="70" :src="ele.cover.images[0]" />
-              </div>
-            </div>
-            <div class="cell-img" v-if="ele.cover.type === 3">
-              <van-image lazy-load v-for="(item, i) in ele.cover.images" :key="i" width="112" height="70" :src="item" />
-            </div>
-          </template>
-          <template #label>
-            <div class="cell-label">
-              <span>{{ ele.aut_name }}&nbsp;&nbsp;{{ ele.comm_count }}&nbsp;评论&nbsp;&nbsp;{{ ele.pubdate | relativeTime }}</span>
-              <van-icon name="cross" @click="toOpenInterest(ele.art_id, i)" />
-            </div>
-          </template>
-        </van-cell>
+        <article-item @openInterest="$emit('openInterest',$event)" v-for="(ele, i) in articleList" :key="ele.art_id" :ele="ele" :index="i" ></article-item>
+
       </van-cell-group>
     </van-list>
   </van-pull-refresh>
@@ -38,11 +21,14 @@
 
 <script>
 import { getHomeArticleList } from '@/api/home'
+import ArticleItem from '@/components/home/ArticleItem.vue'
 // import { interestActions } from '@/constant/reports'
 
 export default {
   name: 'ChannelContent',
-  components: {},
+  components: {
+    ArticleItem
+  },
   props: {
     // 请求对象
     value: {
@@ -117,20 +103,8 @@ export default {
       this.onLoad()
 
       this.refreshing = false
-    },
-    // 是否感兴趣事件
-    toOpenInterest (id, i) {
-      // this.articleInfo.index = i
-      // this.articleInfo.target = id
-      console.log(1111)
-      this.$emit('openInterest', {
-        index: i,
-        target: id
-      })
-      // this.actions = interestActions
-
-      // this.show = true
     }
+
   },
   computed: {},
   watch: {},

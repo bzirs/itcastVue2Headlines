@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-22 21:29:39
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-25 14:50:48
+ * @LastEditTime: 2022-12-25 16:15:27
  * @FilePath: /vue2-itcast-headlines/src/views/Home/index.vue
  * @Description: Home.vue
  *
@@ -80,6 +80,14 @@ export default {
       articleInfo: {}
     }
   },
+  // 依赖注入 孙子组件调用爷爷组件方法
+  // 不能使用箭头函数
+  // 没成功
+  // provide () {
+  //   return {
+  //     toOpenInterest: this
+  //   }
+  // },
   async created () {
     // 获取频道列表
     const {
