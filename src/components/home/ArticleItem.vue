@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-25 14:57:03
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-25 16:14:39
+ * @LastEditTime: 2022-12-25 17:21:48
  * @FilePath: /vue2-itcast-headlines/src/components/home/ArticleItem.vue
  * @Description: home页文章列表item
  *
@@ -55,16 +55,20 @@ export default {
   methods: {
     // 是否感兴趣事件
     toOpenInterest (id, i) {
-      console.log(this.bar)
       // console.log(this.toOpenInterest)
       // this.toOpenInterest({ id, i })
       // this.articleInfo.index = i
       // this.articleInfo.target = id
       // console.log(1111)
-      this.$emit('openInterest', {
+      // console.log(this.$parent.$parent.$parent._uid)
+      const uid = this.$parent.$parent.$parent._uid
+      const obj = {
         index: i,
-        target: id
-      })
+        target: id,
+        uid
+      }
+      console.log(obj)
+      this.$emit('openInterest', obj)
       // this.actions = interestActions
 
       // this.toOpenInterest({

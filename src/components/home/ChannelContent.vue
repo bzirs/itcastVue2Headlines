@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-25 10:42:09
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-25 16:15:04
+ * @LastEditTime: 2022-12-25 17:27:46
  * @FilePath: /vue2-itcast-headlines/src/components/home/ChannelContent.vue
  * @Description: 每个频道内容
  *
@@ -80,6 +80,7 @@ export default {
     },
     // 下拉刷新事件
     onRefresh () {
+      // console.log(this._uid)
       // 清空列表数据
       this.finished = false
 
@@ -103,6 +104,9 @@ export default {
       this.onLoad()
 
       this.refreshing = false
+    },
+    removeArticle (index) {
+      this.articleList.splice(index, 1)
     }
 
   },

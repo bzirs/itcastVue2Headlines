@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-22 21:29:39
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-25 16:15:27
+ * @LastEditTime: 2022-12-25 17:35:44
  * @FilePath: /vue2-itcast-headlines/src/views/Home/index.vue
  * @Description: Home.vue
  *
@@ -19,7 +19,7 @@
       <van-tabs @click="changeTab" ref="vanTabs">
         <van-tab v-for="it in channelList" :title="it.name" :key="it.id">
           <keep-alive>
-          <channel-content @openInterest="toOpenInterest"  v-model="articleListObj" :articleList="articleList"></channel-content>
+          <channel-content ref="channelContent" @openInterest="toOpenInterest"  v-model="articleListObj" :articleList="articleList"></channel-content>
 
           </keep-alive>
         </van-tab>
@@ -35,7 +35,7 @@
     <channel-edit v-model="channelShow" :allList="channelAll" :list="channelList"></channel-edit>
 
     <!-- 不感兴趣和反馈 -->
-    <van-action-sheet v-model="show" :actions="actions" cancel-text="取消" close-on-click-action @select="toSelect"  />
+    <van-action-sheet v-model="show" :actions="actions" :cancel-text="cancel" close-on-click-action @select="toSelect"  @cancel="toCloseSheet" />
   </div>
 </template>
 
@@ -76,6 +76,8 @@ export default {
       // 不感兴趣和反馈相关
       show: false,
       actions: [],
+      // 取消和返回
+      cancel: '取消',
       // 选中的相关文章信息
       articleInfo: {}
     }
@@ -135,13 +137,19 @@ export default {
 
     // 选择是否感兴趣事件
     async toSelect ({ name }, i) {
+      const contentList = this.$refs.channelContent
+      const index = contentList.findIndex(ele => ele._uid === this.articleInfo.uid)
       if (name === '不感兴趣') {
         await toUninterested(this.articleInfo.index)
         this.$toast.success('屏蔽成功了捏!')
-        this.articleList.splice(this.articleInfo.index, 1)
+        // this.articleList.splice(this.articleInfo.index, 1)
+        // console.log(this.$refs.channelContent)
+        // console.log(index)
+        contentList[index].removeArticle(this.articleInfo.index)
       } else if (name === '反馈垃圾内容') {
         this.show = true
         this.actions = feedbackList
+        this.cancel = '返回'
       } else if (this.actions.length === 9) {
         const obj = {
           target: this.articleInfo.index,
@@ -153,13 +161,25 @@ export default {
         await toReport(obj)
 
         this.$toast.success('举报成功了捏!')
-        this.articleList.splice(this.articleInfo.index, 1)
+        // this.articleList.splice(this.articleInfo.index, 1)
+        contentList[index].removeArticle(this.articleInfo.index)
+      }
+    },
+    // 关闭选择框事件
+    toCloseSheet () {
+      console.log(222)
+      if (this.actions.length === 9) {
+        this.show = true
+        this.actions = interestActions
+        this.cancel = '取消'
       }
     },
     // 选择相关反馈
     toSelectFeedback () {}
   },
-  computed: {},
+  computed: {
+
+  },
   watch: {},
   directives: {}
 }
