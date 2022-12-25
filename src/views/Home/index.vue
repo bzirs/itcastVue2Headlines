@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-22 21:29:39
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-24 22:31:54
+ * @LastEditTime: 2022-12-25 09:03:34
  * @FilePath: /vue2-itcast-headlines/src/views/Home/index.vue
  * @Description: Home.vue
  *
@@ -20,23 +20,23 @@
         <van-tab v-for="it in channelList" :title="it.name" :key="it.id">
           <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
             <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-              <van-cell-group v-for="(it, i) in articleList" :key="it.art_id">
-                <van-cell>
+              <van-cell-group>
+                <van-cell v-for="(ele, i) in articleList" :key="ele.art_id">
                   <template #title>
                     <div class="cell-title">
-                      <span>{{ it.title }}</span>
-                      <div v-if="it.cover.type === 1">
-                        <van-image lazy-load width="112" height="70" :src="it.cover.images[0]" />
+                      <span>{{ ele.title }}</span>
+                      <div v-if="ele.cover.type === 1">
+                        <van-image lazy-load width="112" height="70" :src="ele.cover.images[0]" />
                       </div>
                     </div>
-                    <div class="cell-img" v-if="it.cover.type === 3">
-                      <van-image lazy-load v-for="(item, i) in it.cover.images" :key="i" width="112" height="70" :src="item" />
+                    <div class="cell-img" v-if="ele.cover.type === 3">
+                      <van-image lazy-load v-for="(item, i) in ele.cover.images" :key="i" width="112" height="70" :src="item" />
                     </div>
                   </template>
                   <template #label>
                     <div class="cell-label">
-                      <span>{{ it.aut_name }}&nbsp;&nbsp;{{ it.comm_count }}&nbsp;评论&nbsp;&nbsp;{{ it.pubdate | relativeTime }}</span>
-                      <van-icon name="cross" @click="toOpenInterest(it.art_id, i)" />
+                      <span>{{ ele.aut_name }}&nbsp;&nbsp;{{ ele.comm_count }}&nbsp;评论&nbsp;&nbsp;{{ ele.pubdate | relativeTime }}</span>
+                      <van-icon name="cross" @click="toOpenInterest(ele.art_id, i)" />
                     </div>
                   </template>
                 </van-cell>
@@ -53,7 +53,7 @@
 
     <!-- 编辑频道组件 -->
     <!-- <channel v-model="channelShow"></channel> -->
-    <channel-edit v-model="channelShow" :allList="channelAll" :list="channelList" ></channel-edit>
+    <channel-edit v-model="channelShow" :allList="channelAll" :list="channelList"></channel-edit>
 
     <!-- 不感兴趣和反馈 -->
     <van-action-sheet v-model="show" :actions="actions" cancel-text="取消" close-on-click-action @select="toSelect" />
@@ -135,7 +135,9 @@ export default {
     // 去频道页
     async toChannel () {
       // this.$refs.editChannel.style.display = 'block'
-      const { data: { channels } } = await getHomeChannelList()
+      const {
+        data: { channels }
+      } = await getHomeChannelList()
       this.channelAll = channels
 
       // this.channelShow = 'block'
@@ -271,5 +273,4 @@ export default {
 ::v-deep .van-pull-refresh {
   overflow: visible !important;
 }
-
 </style>
