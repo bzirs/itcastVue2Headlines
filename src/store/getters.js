@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-23 16:32:37
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-23 17:11:57
+ * @LastEditTime: 2022-12-26 11:23:02
  * @FilePath: /vue2-itcast-headlines/src/store/getters.js
  * @Description: vuex 计算属性
  * @
@@ -10,7 +10,9 @@
  */
 
 const getters = {
-  token: state => state.user.token
+  token: state => state.user.token,
+  channelList: state => state.channel.channelList,
+  allChannelList: state => state.channel.allChannelList,
+  notSelectChannel: state => state.channel.notSelectChannel
 }
-
 export default getters

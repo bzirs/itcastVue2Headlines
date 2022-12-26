@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-24 15:51:39
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-24 22:01:12
+ * @LastEditTime: 2022-12-26 11:37:07
  * @FilePath: /vue2-itcast-headlines/src/components/home/ChannelEdit.vue
  * @Description: 使用vant组件实现
  *
@@ -11,32 +11,37 @@
 <template>
   <van-popup v-model="show" get-container="#app" class="edit-channel">
     <!-- 顶部栏 -->
-    <van-nav-bar
-      placeholder
-      fixed
-      title="频道管理"
-      @click-right="$emit('input', false)"
-    >
+    <van-nav-bar placeholder fixed title="频道管理" @click-right="$emit('input', false)">
       <template #right>
         <van-icon name="cross" size="20" />
       </template>
     </van-nav-bar>
 
     <!-- 我的频道 -->
-    <channel-edit-item :selectList="list" :flag="flag" :list="list">
+    <channel-edit-item :flag="flag" :list="$store.getters.channelList">
       <template #left>
         <span class="custom-title">我的频道</span>
-        <span class="go-channel">点击{{changeChannel}}频道</span>
+        <span class="go-channel">点击{{ changeChannel }}频道</span>
       </template>
       <template #right>
-        <span @click="flag = !flag">{{changeCheck}}</span>
+        <span @click="flag = !flag">{{ changeCheck }}</span>
+      </template>
+      <template #icon="{ row }">
+        <div class="icon-right" v-if="row.flag && row.list.length === $store.getters.channelList.length">
+          <van-icon name="cross" />
+        </div>
       </template>
     </channel-edit-item>
 
     <!-- 添加频道 -->
-    <channel-edit-item :selectList="list" :list="notSelectChannel">
+    <channel-edit-item :flag="flag" :list="$store.getters.notSelectChannel">
       <template #left>
         <span class="custom-title">点击添加更多频道：</span>
+      </template>
+      <template #icon="{ row }">
+        <div class="icon-right" v-if="row.flag && row.list.length === $store.getters.notSelectChannel.length">
+          <van-icon name="plus" />
+        </div>
       </template>
     </channel-edit-item>
   </van-popup>
@@ -50,12 +55,6 @@ export default {
   props: {
     value: {
       type: Boolean
-    },
-    allList: {
-      type: Array
-    },
-    list: {
-      type: Array
     }
   },
   data () {
@@ -64,7 +63,9 @@ export default {
       flag: false
     }
   },
-  async created () {},
+  async created () {
+    // console.log(this.$store.getters.notSelectChannel)
+  },
   mounted () {},
   activated () {},
   updated () {},
@@ -79,7 +80,7 @@ export default {
         return this.value
       },
       set (val) {
-        console.log(val)
+        // console.log(val)
       }
     },
     // 显示进入删除频道
@@ -89,21 +90,21 @@ export default {
     // 显示编辑确定按钮
     changeCheck () {
       return this.flag ? '确定' : '编辑'
-    },
+    }
 
     // 未选择的频道
-    notSelectChannel () {
-      return this.allList.filter(
-        (ele) => this.list.findIndex((e) => e.id === ele.id) === -1
-      )
-    }
+    // notSelectChannel () {
+    //   console.log(this.$store.getters.channelList)
+    //   console.log(this.$store.getters.allChannelList)
+    // return this.allList.filter(ele => this.list.findIndex(e => e.id === ele.id) === -1)
+    // }
   },
   watch: {},
   directives: {}
 }
 </script>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .edit-channel {
   width: 100%;
   height: 100%;

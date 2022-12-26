@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-24 16:52:02
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-25 22:40:53
+ * @LastEditTime: 2022-12-26 11:35:05
  * @FilePath: /vue2-itcast-headlines/src/components/home/ChannelEditItem.vue
  * @Description:
  *
@@ -23,16 +23,9 @@
 
     <!-- 频道列表 -->
     <van-grid :gutter="10">
-      <van-grid-item
-        @click.native="toChangeChannelList(item.id)"
-        v-for="item in list"
-        :key="item.id"
-        :text="item.name"
-      >
+      <van-grid-item @click.native="toChangeChannelList(item.id)" v-for="item in list" :key="item.id" :text="item.name">
         <template #icon>
-          <div class="icon-right" v-if="flag">
-            <van-icon name="cross" />
-          </div>
+          <slot name="icon" :row="{ flag, list }"></slot>
         </template>
       </van-grid-item>
     </van-grid>
@@ -40,6 +33,7 @@
 </template>
 
 <script>
+import { changeChannel } from '@/api/home'
 export default {
   name: 'ChannelEditItem',
   components: {},
@@ -55,7 +49,9 @@ export default {
     }
   },
   data () {
-    return {}
+    return {
+      channelList: []
+    }
   },
   async created () {},
   mounted () {},
@@ -63,18 +59,46 @@ export default {
   updated () {},
   methods: {
     // 跳转到相应的频道 添加删除频道
-    toChangeChannelList (id) {
+    async toChangeChannelList (id) {
+      console.log(id)
+      // flag为真的时候选中了编辑按钮
       const flag = this.flag
-      if (!flag) {
-        const index = this.selectList.findIndex((ele) => ele.id === id)
+      const selectList = this.$store.getters.channelList
+      const index = selectList.findIndex(ele => ele.id === id)
+      const listLength = this.list.length
+      const selectListLeng = selectList.length
+      // 跳转频道
+      if (!flag && listLength === selectListLeng) {
         console.log(index)
         // console.log(this.$parent.$parent.$parent.changeTab)
         this.$parent.$parent.$parent.changeTab(id)
         this.$parent.$parent.$parent.$refs.vanTabs.scrollTo(id)
         this.$parent.$parent.$parent.channelShow = false
+      } else if (listLength === selectListLeng) {
+        // 删除频道
+        // console.log(id, index)
+        selectList.splice(index, 1)
+
+        console.log(selectList)
+
+        // this.channelList.splice(index, 1)
+
+        // console.log(this.channelList)
+
+        await changeChannel(selectList)
       }
-      console.log(this.flag)
-      console.log(id)
+      // 添加频道
+      if (flag && listLength !== selectListLeng) {
+        const notSelectChannel = this.$store.getters.notSelectChannel
+        const index = notSelectChannel.findIndex(ele => ele.id === id)
+
+        console.log(notSelectChannel[index])
+        selectList.push(notSelectChannel[index])
+        await changeChannel(selectList)
+      }
+
+      // 更新未选择的频道列表
+      this.$store.commit('channel/updatenNotSelectChannel')
     }
   },
   computed: {},
@@ -83,7 +107,7 @@ export default {
 }
 </script>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 ::v-deep .van-grid-item__content--center {
   position: relative;
   background-color: #fafafa;
@@ -101,5 +125,9 @@ export default {
 ::v-deep i.van-icon {
   color: rgb(207, 207, 207);
   font-size: 12px;
+}
+
+::v-deep .van-grid {
+  margin-top: 10px;
 }
 </style>

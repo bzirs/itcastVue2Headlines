@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-22 21:29:39
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-25 22:48:46
+ * @LastEditTime: 2022-12-26 11:15:31
  * @FilePath: /vue2-itcast-headlines/src/views/Home/index.vue
  * @Description: Home.vue
  *
@@ -19,8 +19,7 @@
       <van-tabs @click="changeTab" ref="vanTabs">
         <van-tab :name="it.id" v-for="it in channelList" :title="it.name" :key="it.id">
           <keep-alive>
-          <channel-content ref="channelContent" @openInterest="toOpenInterest"  v-model="articleListObj" :articleList="articleList"></channel-content>
-
+            <channel-content ref="channelContent" @openInterest="toOpenInterest" v-model="articleListObj" :articleList="articleList"></channel-content>
           </keep-alive>
         </van-tab>
       </van-tabs>
@@ -32,15 +31,15 @@
 
     <!-- 编辑频道组件 -->
     <!-- <channel v-model="channelShow"></channel> -->
-    <channel-edit v-model="channelShow" :allList="channelAll" :list="channelList"></channel-edit>
+    <channel-edit v-model="channelShow"></channel-edit>
 
     <!-- 不感兴趣和反馈 -->
-    <van-action-sheet v-model="show" :actions="actions" :cancel-text="cancel" close-on-click-action @select="toSelect"  @cancel="toCloseSheet" />
+    <van-action-sheet v-model="show" :actions="actions" :cancel-text="cancel" close-on-click-action @select="toSelect" @cancel="toCloseSheet" />
   </div>
 </template>
 
 <script>
-import { getGuestChannerList, toReport, toUninterested, getHomeChannelList } from '@/api/home'
+import { getChannerList, toReport, toUninterested, getHomeChannelList } from '@/api/home'
 
 // import channel from '@/components/home/Channel.vue'
 import ChannelEdit from '@/components/home/ChannelEdit.vue'
@@ -94,8 +93,19 @@ export default {
     // 获取频道列表
     const {
       data: { channels }
-    } = await getGuestChannerList()
-    this.channelList = channels
+    } = await getChannerList()
+
+    const {
+      data: { channels: allChannels }
+    } = await getHomeChannelList()
+
+    this.$store.commit('channel/updateAllChannelList', allChannels)
+
+    this.$store.commit('channel/updateChannelList', channels)
+
+    this.$store.commit('channel/updatenNotSelectChannel')
+
+    this.channelList = this.$store.getters.channelList
   },
   mounted () {},
   activated () {},
@@ -108,10 +118,8 @@ export default {
     // 去频道页
     async toChannel () {
       // this.$refs.editChannel.style.display = 'block'
-      const {
-        data: { channels }
-      } = await getHomeChannelList()
-      this.channelAll = channels
+
+      this.channelAll = this.$store.getters.allChannelList
 
       // this.channelShow = 'block'
       this.channelShow = true
@@ -177,9 +185,7 @@ export default {
     // 选择相关反馈
     toSelectFeedback () {}
   },
-  computed: {
-
-  },
+  computed: {},
   watch: {},
   directives: {}
 }
