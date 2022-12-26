@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-25 10:42:09
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-25 17:27:46
+ * @LastEditTime: 2022-12-26 15:36:13
  * @FilePath: /vue2-itcast-headlines/src/components/home/ChannelContent.vue
  * @Description: 每个频道内容
  *
@@ -69,7 +69,13 @@ export default {
         timestamp
       })
 
-      this.articleList.push(...results)
+      results.forEach(ele => {
+        const flag = this.articleList.findIndex(item => item.art_id === ele.art_id)
+
+        flag === -1 && this.articleList.push(ele)
+      })
+
+      // this.articleList.push(...results)
 
       // 加载状态结束
       this.loading = false
