@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-22 21:15:29
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-26 20:30:33
+ * @LastEditTime: 2022-12-26 22:22:18
  * @FilePath: /vue2-itcast-headlines/src/router/index.js
  * @Description: 路由
  * @
@@ -29,6 +29,7 @@ const routes = [
   },
   { path: '/login', component: () => import('@/views/Login'), name: 'login' },
   { path: '/register', component: () => import('@/views/Register'), name: 'register' },
+  { path: '/details', component: () => import('@/views/ArticleDetails'), name: 'details' },
   {
     path: '/search',
     component: () => import('@/views/Search'),

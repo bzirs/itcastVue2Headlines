@@ -2,14 +2,14 @@
  * @Author: bzirs
  * @Date: 2022-12-25 14:57:03
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-26 21:13:51
- * @FilePath: /vue2-itcast-headlines/src/components/home/ArticleItem.vue
+ * @LastEditTime: 2022-12-26 22:28:10
+ * @FilePath: /vue2-itcast-headlines/src/components/ArticleItem.vue
  * @Description: home页文章列表item
  *
  * Copyright (c) 2022 by bzirs, All Rights Reserved.
 -->
 <template>
-  <van-cell>
+  <van-cell @click.native="toArticleDetails">
     <template #title>
       <div class="cell-title">
         <span>{{ ele.title }}</span>
@@ -47,8 +47,7 @@ export default {
     }
   },
   data () {
-    return {
-    }
+    return {}
   },
   async created () {},
   mounted () {},
@@ -57,6 +56,16 @@ export default {
   // 依赖注入 孙子(或者子组件)组件接收爷爷组件的方法
   // inject: ['toOpenInterest'],
   methods: {
+    // 去文章详情
+    toArticleDetails (e) {
+      const flag = e.target.classList.contains('van-icon-cross')
+      !flag && this.$router.push({
+        path: '/details',
+        query: {
+          art_id: this.ele.art_id
+        }
+      })
+    },
     // 是否感兴趣事件
     toOpenInterest (id, i) {
       // console.log(this.toOpenInterest)
