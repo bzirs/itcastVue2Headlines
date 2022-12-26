@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-22 21:29:39
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-26 11:15:31
+ * @LastEditTime: 2022-12-26 11:49:16
  * @FilePath: /vue2-itcast-headlines/src/views/Home/index.vue
  * @Description: Home.vue
  *
@@ -113,7 +113,7 @@ export default {
   methods: {
     // 顶部栏右侧搜索按钮
     onNavClickRight () {
-      console.log(111)
+      this.$router.push('/search')
     },
     // 去频道页
     async toChannel () {

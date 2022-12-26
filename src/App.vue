@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-22 21:15:29
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-22 21:24:38
+ * @LastEditTime: 2022-12-26 11:50:15
  * @FilePath: /vue2-itcast-headlines/src/App.vue
  * @Description: App.vue
  *
@@ -11,10 +11,10 @@
 <template>
   <div id="app">
     <!-- 一级路由出口 -->
-    <router-view/>
+    <keep-alive>
+      <router-view />
+    </keep-alive>
   </div>
 </template>
 
-<style lang="scss">
-
-</style>
+<style lang="scss"></style>
