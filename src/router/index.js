@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-22 21:15:29
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-22 22:55:56
+ * @LastEditTime: 2022-12-26 20:30:33
  * @FilePath: /vue2-itcast-headlines/src/router/index.js
  * @Description: 路由
  * @
@@ -29,7 +29,16 @@ const routes = [
   },
   { path: '/login', component: () => import('@/views/Login'), name: 'login' },
   { path: '/register', component: () => import('@/views/Register'), name: 'register' },
-  { path: '/search', component: () => import('@/views/Search'), name: 'search' }
+  {
+    path: '/search',
+    component: () => import('@/views/Search'),
+    name: 'search',
+    // 动态路由
+    children: [
+    ]
+  },
+  { path: '/search/:q', component: () => import('@/views/Search/SearchResult.vue') }
+
 ]
 
 const router = new VueRouter({

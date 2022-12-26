@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-25 14:57:03
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-25 17:21:48
+ * @LastEditTime: 2022-12-26 21:13:51
  * @FilePath: /vue2-itcast-headlines/src/components/home/ArticleItem.vue
  * @Description: home页文章列表item
  *
@@ -24,7 +24,7 @@
     <template #label>
       <div class="cell-label">
         <span>{{ ele.aut_name }}&nbsp;&nbsp;{{ ele.comm_count }}&nbsp;评论&nbsp;&nbsp;{{ ele.pubdate | relativeTime }}</span>
-        <van-icon name="cross" @click="toOpenInterest(ele.art_id, index)" />
+        <van-icon v-if="flag" name="cross" @click="toOpenInterest(ele.art_id, index)" />
       </div>
     </template>
   </van-cell>
@@ -35,6 +35,10 @@ export default {
   name: 'ArticleItem',
   components: {},
   props: {
+    flag: {
+      type: Boolean,
+      default: true
+    },
     index: {
       type: Number
     },

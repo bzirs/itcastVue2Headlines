@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-25 10:42:09
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-26 15:36:13
+ * @LastEditTime: 2022-12-26 21:19:25
  * @FilePath: /vue2-itcast-headlines/src/components/home/ChannelContent.vue
  * @Description: 每个频道内容
  *
@@ -21,7 +21,7 @@
 
 <script>
 import { getHomeArticleList } from '@/api/home'
-import ArticleItem from '@/components/home/ArticleItem.vue'
+import ArticleItem from '@/components/ArticleItem.vue'
 // import { interestActions } from '@/constant/reports'
 
 export default {
@@ -34,6 +34,7 @@ export default {
     value: {
       type: Object
     }
+
   },
   data () {
     return {
@@ -55,7 +56,6 @@ export default {
     // 加载事件
     async onLoad () {
       // Date.now()
-      console.log(this.value)
       const {
         data: { pre_timestamp: timestamp, results }
       } = await getHomeArticleList(this.value)
