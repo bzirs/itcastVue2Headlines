@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-26 21:20:02
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-26 21:39:07
+ * @LastEditTime: 2022-12-26 21:48:29
  * @FilePath: /vue2-itcast-headlines/src/components/search/ArticleList.vue
  * @Description: 搜索结果列表
  *
@@ -37,7 +37,6 @@ export default {
   },
   async created () {},
   mounted () {},
-  activated () {},
   updated () {},
   methods: {
     async onLoad () {
@@ -63,7 +62,17 @@ export default {
       console.log(newV, oldV)
     }
   },
-  directives: {}
+  directives: {},
+  activated () {
+    this.articles = []
+    this.loading = true
+    this.finished = false
+    this.reqObj = {
+      page: 1,
+      per_page: 10
+    }
+    this.onLoad()
+  }
 }
 </script>
 
