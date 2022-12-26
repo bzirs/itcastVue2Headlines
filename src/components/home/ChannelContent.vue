@@ -71,7 +71,6 @@ export default {
 
       results.forEach(ele => {
         const flag = this.articleList.findIndex(item => item.art_id === ele.art_id)
-
         flag === -1 && this.articleList.push(ele)
       })
 

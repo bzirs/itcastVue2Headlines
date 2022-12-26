@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-26 21:20:02
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-26 21:48:29
+ * @LastEditTime: 2022-12-26 21:59:40
  * @FilePath: /vue2-itcast-headlines/src/components/search/ArticleList.vue
  * @Description: 搜索结果列表
  *
@@ -49,7 +49,12 @@ export default {
       // 数据全部加载完成
       if (!results.length) this.finished = true
 
-      this.articles.push(...results)
+      results.forEach(ele => {
+        const flag = this.articles.findIndex(item => item.art_id === ele.art_id)
+        flag === -1 && this.articles.push(ele)
+      })
+
+      // this.articles.push(...results)
       this.reqObj.page++
 
       // 加载状态结束
@@ -58,9 +63,6 @@ export default {
   },
   computed: {},
   watch: {
-    $route (newV, oldV) {
-      console.log(newV, oldV)
-    }
   },
   directives: {},
   activated () {

@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-22 21:36:33
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-26 21:49:40
+ * @LastEditTime: 2022-12-26 21:57:32
  * @FilePath: /vue2-itcast-headlines/src/views/Search/index.vue
  * @Description: search.vue
  *
@@ -33,7 +33,7 @@
 
       <!-- 搜索历史 -->
       <van-grid :gutter="10" :column-num="5">
-        <van-grid-item v-for="(item, index) in $store.getters.historys" :key="index" :text="item" class="history-item" />
+        <van-grid-item v-for="(item, index) in $store.getters.historys" :key="index" :text="item" class="history-item" @click="toSearch" />
       </van-grid>
     </div>
   </div>
@@ -52,14 +52,18 @@ export default {
       show: true
     }
   },
-  async created () {
-  },
+  async created () {},
   mounted () {},
   activated () {
     this.show = true
   },
   updated () {},
   methods: {
+    // 搜索历史点击事件
+    toSearch (e) {
+      // console.log(e.target.innerText)
+      this.$router.push('/search/' + e.target.innerText)
+    },
     // 回车搜索事件
     onSearch (val) {
       const list = this.$store.getters.historys
@@ -90,16 +94,14 @@ export default {
     }
   },
   computed: {},
-  watch: {
-  },
+  watch: {},
   directives: {}
 }
 </script>
 
 <style scoped lang="scss">
-
-::v-deep .van-search{
-  padding-top:0;
+::v-deep .van-search {
+  padding-top: 0;
   padding-bottom: 0;
   height: 46px;
 }
