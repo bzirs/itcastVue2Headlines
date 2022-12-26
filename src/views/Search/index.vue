@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-22 21:36:33
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-26 21:36:28
+ * @LastEditTime: 2022-12-26 21:49:40
  * @FilePath: /vue2-itcast-headlines/src/views/Search/index.vue
  * @Description: search.vue
  *
@@ -55,7 +55,9 @@ export default {
   async created () {
   },
   mounted () {},
-  activated () {},
+  activated () {
+    this.show = true
+  },
   updated () {},
   methods: {
     // 回车搜索事件
@@ -89,11 +91,6 @@ export default {
   },
   computed: {},
   watch: {
-    $route (newV) {
-      // console.log(newV)
-      this.show = true
-    }
-
   },
   directives: {}
 }
