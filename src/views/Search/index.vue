@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-22 21:36:33
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-26 21:06:28
+ * @LastEditTime: 2022-12-26 21:36:28
  * @FilePath: /vue2-itcast-headlines/src/views/Search/index.vue
  * @Description: search.vue
  *
@@ -60,8 +60,15 @@ export default {
   methods: {
     // 回车搜索事件
     onSearch (val) {
-      this.$store.commit('search/updateHistorys', [...this.$store.getters.historys, val])
+      const list = this.$store.getters.historys
+
+      const flag = list.findIndex(ele => ele === val) === -1
+
+      flag && list.push(val)
+      flag && this.$store.commit('search/updateHistorys', list)
+
       this.value = ''
+
       this.$router.push('/search/' + val)
     },
     // 输入框输入内容事件
