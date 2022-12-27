@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-27 11:14:04
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-27 17:02:31
+ * @LastEditTime: 2022-12-27 17:59:28
  * @FilePath: /vue2-itcast-headlines/src/views/ArticleDetails/components/DetailsBottom.vue
  * @Description:
  *
@@ -41,6 +41,7 @@
 </template>
 
 <script>
+import { cancelCollectionArticle, collectionArticle } from '@/api/articleDetails'
 export default {
   name: 'DetailsBottom',
   components: {},
@@ -48,6 +49,9 @@ export default {
     star: {
       type: Boolean
       // required: true
+    },
+    id: {
+      type: String
     }
   },
   data () {
@@ -64,7 +68,8 @@ export default {
   updated () {},
   methods: {
     async handleStar () {
-      // this.star
+      await (this.star ? cancelCollectionArticle(this.id) : collectionArticle(this.id))
+      this.$emit('update:star', !this.star)
     },
     // 打开评论框
     toComment () {

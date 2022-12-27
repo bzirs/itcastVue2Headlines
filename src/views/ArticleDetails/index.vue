@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-22 21:35:55
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-27 15:48:02
+ * @LastEditTime: 2022-12-27 22:22:28
  * @FilePath: /vue2-itcast-headlines/src/views/ArticleDetails/index.vue
  * @Description: ArticleDetails.vue
  *
@@ -20,36 +20,52 @@
     </div>
 
     <!-- 骨架屏 -->
-    <van-skeleton :row="18" title animate round />
+    <van-skeleton :loading="show" :row="18" title anima te round>
+      <!-- /文章详情 -->
+    <article-details :attitude.sync="artInfo.attitude" :article="artInfo"></article-details>
+    </van-skeleton>
 
     <!-- 底部导航栏 -->
-  <details-bottom :star="artInfo.is_collected"></details-bottom>
+    <details-bottom :star.sync="artInfo.is_collected" :id="artInfo.art_id"></details-bottom>
   </div>
 </template>
 
 <script>
 import { getArticleDetails } from '@/api/articleDetails'
 import DetailsBottom from './components/DetailsBottom.vue'
+import ArticleDetails from './components/ArticleDetails.vue'
 export default {
   name: 'ArticleDetailsPage',
-  components: { DetailsBottom },
+  components: { DetailsBottom, ArticleDetails },
   props: {},
   data () {
     return {
-      artInfo: {}
+      artInfo: {},
+      // 是否显示文章内容
+      show: true
+
     }
   },
-  async created () {
-    const { data } = await getArticleDetails(this.$route.query.art_id)
-    this.artInfo = data
-  },
+  async created () {},
   mounted () {},
-  activated () {},
+  activated () {
+    this.getArticleContent()
+  },
   updated () {},
-  methods: {},
+  methods: {
+    async getArticleContent () {
+      const { data } = await getArticleDetails(this.$route.query.art_id)
+      this.show = false
+      this.artInfo = data
+    }
+  },
   computed: {},
   watch: {},
-  directives: {}
+  directives: {},
+
+  deactivated () {
+    this.show = true
+  }
 }
 </script>
 
