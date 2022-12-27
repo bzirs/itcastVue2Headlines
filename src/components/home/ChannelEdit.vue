@@ -2,14 +2,14 @@
  * @Author: bzirs
  * @Date: 2022-12-24 15:51:39
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-26 11:37:07
+ * @LastEditTime: 2022-12-27 17:36:45
  * @FilePath: /vue2-itcast-headlines/src/components/home/ChannelEdit.vue
  * @Description: 使用vant组件实现
  *
  * Copyright (c) 2022 by bzirs, All Rights Reserved.
 -->
 <template>
-  <van-popup v-model="show" get-container="#app" class="edit-channel">
+  <van-popup v-if="value" v-model="show" get-container="#app" class="edit-channel">
     <!-- 顶部栏 -->
     <van-nav-bar placeholder fixed title="频道管理" @click-right="$emit('input', false)">
       <template #right>
@@ -100,7 +100,12 @@ export default {
     // }
   },
   watch: {},
-  directives: {}
+  directives: {},
+  deactivated () {
+    this.flag = false
+    this.$emit('input', false)
+    // this.$destroy()
+  }
 }
 </script>
 

@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-27 11:14:04
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-27 16:46:46
+ * @LastEditTime: 2022-12-27 17:02:31
  * @FilePath: /vue2-itcast-headlines/src/views/ArticleDetails/components/DetailsBottom.vue
  * @Description:
  *
@@ -63,7 +63,7 @@ export default {
   activated () {},
   updated () {},
   methods: {
-    handleStar () {
+    async handleStar () {
       // this.star
     },
     // 打开评论框

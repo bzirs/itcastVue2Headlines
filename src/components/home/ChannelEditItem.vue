@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-24 16:52:02
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-26 11:35:05
+ * @LastEditTime: 2022-12-27 17:36:52
  * @FilePath: /vue2-itcast-headlines/src/components/home/ChannelEditItem.vue
  * @Description:
  *
@@ -63,10 +63,16 @@ export default {
       console.log(id)
       // flag为真的时候选中了编辑按钮
       const flag = this.flag
+      // 选中的频道列表
       const selectList = this.$store.getters.channelList
+      // 选中的频道下标
       const index = selectList.findIndex(ele => ele.id === id)
+
       const listLength = this.list.length
+      // 选中的频道列表长度
       const selectListLeng = selectList.length
+      // 判断本地是否有token
+      const token = this.$store.getters.token
       // 跳转频道
       if (!flag && listLength === selectListLeng) {
         console.log(index)
@@ -77,9 +83,7 @@ export default {
       } else if (listLength === selectListLeng) {
         // 删除频道
         // console.log(id, index)
-        selectList.splice(index, 1)
-
-        console.log(selectList)
+        token && selectList.splice(index, 1)
 
         // this.channelList.splice(index, 1)
 
@@ -92,8 +96,7 @@ export default {
         const notSelectChannel = this.$store.getters.notSelectChannel
         const index = notSelectChannel.findIndex(ele => ele.id === id)
 
-        console.log(notSelectChannel[index])
-        selectList.push(notSelectChannel[index])
+        token && selectList.push(notSelectChannel[index])
         await changeChannel(selectList)
       }
 
@@ -103,7 +106,10 @@ export default {
   },
   computed: {},
   watch: {},
-  directives: {}
+  directives: {},
+  deactivated () {
+
+  }
 }
 </script>
 
