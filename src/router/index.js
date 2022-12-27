@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-22 21:15:29
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-26 22:22:18
+ * @LastEditTime: 2022-12-27 22:50:26
  * @FilePath: /vue2-itcast-headlines/src/router/index.js
  * @Description: 路由
  * @
@@ -43,6 +43,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
+  mode: 'history',
   routes
 })
 

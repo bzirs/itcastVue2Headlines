@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-22 21:35:55
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-27 22:22:28
+ * @LastEditTime: 2022-12-27 22:48:39
  * @FilePath: /vue2-itcast-headlines/src/views/ArticleDetails/index.vue
  * @Description: ArticleDetails.vue
  *
@@ -21,8 +21,12 @@
 
     <!-- 骨架屏 -->
     <van-skeleton :loading="show" :row="18" title anima te round>
-      <!-- /文章详情 -->
+      <!-- 文章详情 -->
     <article-details :attitude.sync="artInfo.attitude" :article="artInfo"></article-details>
+
+      <!-- 评论列表 -->
+      <article-comment ></article-comment>
+
     </van-skeleton>
 
     <!-- 底部导航栏 -->
@@ -34,9 +38,10 @@
 import { getArticleDetails } from '@/api/articleDetails'
 import DetailsBottom from './components/DetailsBottom.vue'
 import ArticleDetails from './components/ArticleDetails.vue'
+import ArticleComment from './components/ArticleComment.vue'
 export default {
   name: 'ArticleDetailsPage',
-  components: { DetailsBottom, ArticleDetails },
+  components: { DetailsBottom, ArticleDetails, ArticleComment },
   props: {},
   data () {
     return {
