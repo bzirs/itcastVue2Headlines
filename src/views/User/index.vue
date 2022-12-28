@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-22 21:38:53
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-28 14:55:14
+ * @LastEditTime: 2022-12-28 14:59:54
  * @FilePath: /vue2-itcast-headlines/src/views/User/index.vue
  * @Description: User.vue
  *
@@ -61,7 +61,7 @@
       <van-cell icon="edit" title="编辑资料" to="/edit" is-link />
       <van-cell icon="chat-o" title="小智同学" to="/chat" is-link />
       <van-cell icon="setting-o" title="系统设置" is-link />
-      <van-cell icon="warning-o" title="退出登录" />
+      <van-cell icon="warning-o" title="退出登录" is-link />
     </van-cell-group>
   </div>
 </template>
