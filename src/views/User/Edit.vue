@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-22 22:06:13
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-28 14:58:57
+ * @LastEditTime: 2022-12-28 15:18:09
  * @FilePath: /vue2-itcast-headlines/src/views/User/Edit.vue
  * @Description: UserEdit.vue
  *
@@ -17,7 +17,7 @@
   <!-- 编辑区 -->
   <van-cell-group>
     <van-cell is-link title="头像" center>
-      <van-image slot="default" width="1.5rem" height="1.5rem" fit="cover" round :src="userInfo.photo" />
+      <van-image slot="default" width="20px" height="20px" fit="cover" round :src="userInfo.photo" />
     </van-cell>
     <!-- value： 设置右侧显示的文字 -->
     <van-cell is-link title="姓名" :value="userInfo.name" @click="isShowName = true" />
@@ -41,9 +41,6 @@ export default {
       isShowGender: false,
       isShowBirthday: false,
 
-      // 当前用户的信息
-      userInfo: { name: '张三' },
-
       // 修改后的新名字
       newName: '',
       // 修改后新生日
@@ -57,7 +54,11 @@ export default {
   activated () {},
   updated () {},
   methods: {},
-  computed: {},
+  computed: {
+    userInfo () {
+      return this.$store.getters.userInfo
+    }
+  },
   watch: {},
   directives: {}
 }
