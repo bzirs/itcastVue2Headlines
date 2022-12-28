@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-27 21:44:17
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-27 22:25:50
+ * @LastEditTime: 2022-12-28 09:16:23
  * @FilePath: /vue2-itcast-headlines/src/views/ArticleDetails/components/ArticleDetails.vue
  * @Description:
  *
@@ -27,7 +27,7 @@
     <div class="zan">
       <van-button round size="small" hairline type="primary" plain icon="good-job-o" @click.native="handleFabulous" :class="{ 'active-zan': attitude===1 }">{{ Fabulous }}</van-button>
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <van-button round size="small" hairline type="danger" plain icon="delete" @click.native="handleLike" :class="{'active-like':like}">不喜欢</van-button>
+      <van-button round size="small" hairline type="danger" plain icon="delete" @click.native="handleLike" :class="{'active-like':like}">{{ Like}}</van-button>
     </div>
   </div>
 </template>
@@ -75,6 +75,10 @@ export default {
     // 显示是否点赞
     Fabulous () {
       return this.FabulousStatus ? '已点赞' : '点赞'
+    },
+    // 显示是否喜欢
+    Like () {
+      return this.like ? '喜欢' : '不喜欢'
     },
     // 点赞状态
     FabulousStatus () {
