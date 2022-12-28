@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-27 21:44:17
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-28 09:34:10
+ * @LastEditTime: 2022-12-28 09:43:57
  * @FilePath: /vue2-itcast-headlines/src/views/ArticleDetails/components/ArticleDetails.vue
  * @Description:
  *
@@ -18,22 +18,31 @@
         <p class="name">{{ article.aut_name }}</p>
         <p class="time">{{ article.pubdate | relativeTime }}</p>
       </div>
-      <van-button round size="small" type="info" @click.native="handleFollowed" :class="{'active-followed':followed}">{{Followed}}</van-button>
+      <van-button round size="small" type="info" @click.native="handleFollowed"
+        :class="{ 'active-followed': followed }">{{ Followed }}</van-button>
     </div>
     <div class="content">
       <div v-html="article.content"></div>
     </div>
     <van-divider>END</van-divider>
     <div class="zan">
-      <van-button round size="small" hairline type="primary" plain icon="good-job-o" @click.native="handleFabulous" :class="{ 'active-zan': attitude === 1 }">{{ Fabulous }}</van-button>
+      <van-button round size="small" hairline type="primary" plain icon="good-job-o" @click.native="handleFabulous"
+        :class="{ 'active-zan': attitude === 1 }">{{ Fabulous }}</van-button>
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <van-button round size="small" hairline type="danger" plain icon="delete" @click.native="handleLike" :class="{ 'active-like': like }">{{ Like }}</van-button>
+      <van-button round size="small" hairline type="danger" plain icon="delete" @click.native="handleLike"
+        :class="{ 'active-like': like }">{{ Like }}</van-button>
     </div>
   </div>
 </template>
 
 <script>
-import { articleFabulous, articleNotFabulous, articleNotLike, articleNotAttention, articleAttention } from '@/api/articleDetails'
+import {
+  articleFabulous,
+  articleNotFabulous,
+  articleNotLike,
+  articleNotAttention,
+  articleAttention
+} from '@/api/articleDetails'
 export default {
   name: 'ArticleDetails',
   components: {},
@@ -77,7 +86,9 @@ export default {
     async handleFollowed () {
       const autId = this.article.aut_id
       console.log(autId)
-      await (this.followed ? articleNotAttention(autId) : articleAttention(autId))
+      await (this.followed
+        ? articleNotAttention(autId)
+        : articleAttention(autId))
 
       this.$emit('update:followed', !this.followed)
     }
@@ -114,20 +125,25 @@ export default {
   width: 100%;
   height: 100%;
 }
+
 .article-loading {
   padding-top: 100px;
   text-align: center;
 }
+
 .error {
   padding-top: 100px;
   text-align: center;
 }
+
 .detail {
   padding: 0 10px;
   padding-bottom: 80px;
+
   .title {
     font-size: 16px;
   }
+
   .zan {
     text-align: center;
 
@@ -141,6 +157,7 @@ export default {
       background-color: #ee0a24;
     }
   }
+
   .author {
     padding: 10px 0;
     display: flex;
@@ -159,14 +176,17 @@ export default {
       width: 36px;
       height: 36px;
     }
+
     .text {
       flex: 1;
       padding-left: 10px;
       line-height: 1.3;
+
       .name {
         font-size: 14px;
         margin: 0;
       }
+
       .time {
         margin: 0;
         font-size: 12px;
@@ -174,11 +194,13 @@ export default {
       }
     }
   }
+
   .content {
     font-size: 14px;
     overflow: hidden;
     white-space: pre-wrap;
     word-break: break-all;
+
     ::v-deep img {
       max-width: 100%;
       background: #f9f9f9;
