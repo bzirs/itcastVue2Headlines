@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-23 16:34:19
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-28 14:45:46
+ * @LastEditTime: 2022-12-28 15:09:01
  * @FilePath: /vue2-itcast-headlines/src/store/modules/user.js
  * @Description: vuex user.js
  * @
@@ -46,6 +46,11 @@ const actions = {
     const { data: otherInfo } = await userOtherInfo()
 
     commit('updateUserInfo', { ...data, ...otherInfo })
+  },
+  // 删除用户信息
+  async removeInfo ({ commit }, payload) {
+    await commit('updateUserInfo', payload)
+    await commit('updateToken', payload)
   }
 }
 
