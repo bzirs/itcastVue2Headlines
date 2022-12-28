@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-22 21:29:39
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-28 15:21:24
+ * @LastEditTime: 2022-12-28 15:41:43
  * @FilePath: /vue2-itcast-headlines/src/views/Home/index.vue
  * @Description: Home.vue
  *
@@ -16,7 +16,7 @@
       <van-nav-bar placeholder fixed title="黑马头条" right-text="搜索" @click-right="onNavClickRight" >
       <template #left>
         <van-image v-if="$store.getters.avatar" round width="30px" height="30px" fit :src="$store.getters.avatar" />
-        <van-image v-else round width="30px" height="30px" fit src="@/assets/login.png" />
+        <van-image v-else  round width="30px" height="30px" fit :src="loginImg" @click.native="$router.push('/login')" />
       </template>
       </van-nav-bar>
 
@@ -44,6 +44,7 @@
 </template>
 
 <script>
+import loginImg from '@/assets/login.png'
 import { getChannerList, toReport, toUninterested, getHomeChannelList } from '@/api/home'
 
 // import channel from '@/components/home/Channel.vue'
@@ -62,6 +63,7 @@ export default {
   props: {},
   data () {
     return {
+      loginImg,
       // 编辑频道显示隐藏
       // channelShow: 'none',
       channelShow: false,
