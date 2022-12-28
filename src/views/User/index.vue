@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-22 21:38:53
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-28 15:07:55
+ * @LastEditTime: 2022-12-28 17:55:01
  * @FilePath: /vue2-itcast-headlines/src/views/User/index.vue
  * @Description: User.vue
  *
@@ -87,10 +87,10 @@ export default {
         message: '主人，您真的要离开我吗?'
       })
 
-      this.$router.push('/login')
       // this.$store.dispatch('user/removeInfo', null)
       this.$store.commit('user/updateToken', '')
       this.$store.commit('user/updateUserInfo', {})
+      this.$router.push('/login')
     }
   },
   computed: {
