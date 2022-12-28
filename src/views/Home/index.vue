@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-22 21:29:39
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-26 11:49:16
+ * @LastEditTime: 2022-12-28 15:21:24
  * @FilePath: /vue2-itcast-headlines/src/views/Home/index.vue
  * @Description: Home.vue
  *
@@ -13,7 +13,12 @@
     <!-- 首页 -->
     <div>
       <!-- 顶部栏 -->
-      <van-nav-bar placeholder fixed title="黑马头条" right-text="搜索" @click-right="onNavClickRight" />
+      <van-nav-bar placeholder fixed title="黑马头条" right-text="搜索" @click-right="onNavClickRight" >
+      <template #left>
+        <van-image v-if="$store.getters.avatar" round width="30px" height="30px" fit :src="$store.getters.avatar" />
+        <van-image v-else round width="30px" height="30px" fit src="@/assets/login.png" />
+      </template>
+      </van-nav-bar>
 
       <!-- 频道列表 -->
       <van-tabs @click="changeTab" ref="vanTabs">

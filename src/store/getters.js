@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-23 16:32:37
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-28 14:47:46
+ * @LastEditTime: 2022-12-28 15:23:16
  * @FilePath: /vue2-itcast-headlines/src/store/getters.js
  * @Description: vuex 计算属性
  * @
@@ -15,6 +15,7 @@ const getters = {
   allChannelList: state => state.channel.allChannelList,
   notSelectChannel: state => state.channel.notSelectChannel,
   historys: state => state.search.historys,
-  userInfo: state => state.user.userInfo
+  userInfo: state => state.user.userInfo,
+  avatar: state => state.user.userInfo.photo
 }
 export default getters
