@@ -2,14 +2,14 @@
  * @Author: bzirs
  * @Date: 2022-12-22 22:43:57
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-28 15:03:33
+ * @LastEditTime: 2022-12-28 17:17:46
  * @FilePath: /vue2-itcast-headlines/src/utils/vant.js
  * @Description: vant
  * @
  * @Copyright (c) 2022 by bzirs, All Rights Reserved.
  */
 import Vue from 'vue'
-import { Button, Tabbar, TabbarItem, NavBar, Form, Field, Toast, Tab, Tabs, Icon, List, PullRefresh, Cell, CellGroup, Image as VanImage, ActionSheet, Lazyload, Popup, Tag, Grid, GridItem, Search, Skeleton, Divider, Col, Row, Dialog } from 'vant'
+import { Button, Tabbar, TabbarItem, NavBar, Form, Field, Toast, Tab, Tabs, Icon, List, PullRefresh, Cell, CellGroup, Image as VanImage, ActionSheet, Lazyload, Popup, Tag, Grid, GridItem, Search, Skeleton, Divider, Col, Row, Dialog, Uploader, Calendar, DatetimePicker } from 'vant'
 
 Vue.use(Button)
 Vue.use(Tag)
@@ -39,6 +39,12 @@ Vue.use(Tabs)
 Vue.use(Icon)
 
 Vue.use(List)
+
+Vue.use(Calendar)
+
+Vue.use(DatetimePicker)
+
+Vue.use(Uploader)
 
 Vue.use(PullRefresh)
 

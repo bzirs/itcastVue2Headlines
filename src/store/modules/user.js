@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-23 16:34:19
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-28 15:09:01
+ * @LastEditTime: 2022-12-28 17:00:32
  * @FilePath: /vue2-itcast-headlines/src/store/modules/user.js
  * @Description: vuex user.js
  * @
@@ -30,6 +30,10 @@ const mutations = {
   // 更新用户信息
   updateUserInfo (state, payload) {
     state.userInfo = payload
+  },
+  // 更新用户头像
+  updateUserAvatar (state, payload) {
+    state.userInfo.photo = payload
   }
 }
 
