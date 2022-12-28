@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-28 09:50:01
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-28 10:04:48
+ * @LastEditTime: 2022-12-28 17:53:22
  * @FilePath: /vue2-itcast-headlines/src/permission.js
  * @Description:
  * @
@@ -25,7 +25,8 @@ router.beforeEach((to, from, next) => {
     store.dispatch('user/getUserInfo')
     next()
   } else if (balckList.includes(to.path)) {
-    next('/login')
+    // next('/login')
+    router.push('/login')
   } else {
     next()
   }
