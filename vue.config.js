@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-22 21:15:29
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-24 09:07:24
+ * @LastEditTime: 2022-12-28 08:47:23
  * @FilePath: /vue2-itcast-headlines/vue.config.js
  * @Description:
  * @
@@ -15,6 +15,7 @@ const port = process.env.port || 8989
 
 const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
+  // publicPath: '',
   transpileDependencies: true,
   css: {
     loaderOptions: {

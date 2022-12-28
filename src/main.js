@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-22 21:15:29
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-23 21:14:33
+ * @LastEditTime: 2022-12-28 08:54:05
  * @FilePath: /vue2-itcast-headlines/src/main.js
  * @Description:
  * @
@@ -12,6 +12,8 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+
+import '@/styles/index.scss'
 
 import filter from '@/utils/formateDate'
 
