@@ -77,7 +77,6 @@ export default {
   async created () {},
   mounted () {},
   activated () {
-    this.$store.dispatch('user/getUserInfo')
   },
   updated () {},
   methods: {

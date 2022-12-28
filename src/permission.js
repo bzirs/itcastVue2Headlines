@@ -22,6 +22,7 @@ router.beforeEach((to, from, next) => {
   nProgress.start()
   const token = store.getters.token
   if (token) {
+    store.dispatch('user/getUserInfo')
     next()
   } else if (balckList.includes(to.path)) {
     next('/login')
