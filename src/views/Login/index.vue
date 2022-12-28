@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-22 21:28:47
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-23 17:03:25
+ * @LastEditTime: 2022-12-28 17:56:13
  * @FilePath: /vue2-itcast-headlines/src/views/Login/index.vue
  * @Description: Login.vue
  *
@@ -50,7 +50,7 @@ export default {
     // 顶部栏左侧按钮
     onClickLeft () {
       // 返回上一个页面
-      this.$router.back()
+      this.$router.push('/')
     },
     // 登录
     async onLogin (values) {
