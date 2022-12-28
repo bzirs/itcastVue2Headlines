@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-22 21:15:29
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-28 08:54:05
+ * @LastEditTime: 2022-12-28 09:55:55
  * @FilePath: /vue2-itcast-headlines/src/main.js
  * @Description:
  * @
@@ -16,6 +16,9 @@ import store from './store'
 import '@/styles/index.scss'
 
 import filter from '@/utils/formateDate'
+
+// 导入导航守卫
+import '@/permission'
 
 // 导入vant
 import '@/utils/vant'
