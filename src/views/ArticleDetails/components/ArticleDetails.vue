@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-27 21:44:17
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-28 09:16:23
+ * @LastEditTime: 2022-12-28 09:34:10
  * @FilePath: /vue2-itcast-headlines/src/views/ArticleDetails/components/ArticleDetails.vue
  * @Description:
  *
@@ -16,24 +16,24 @@
       <van-image class="img" round :src="article.aut_photo" fit="fill" />
       <div class="text">
         <p class="name">{{ article.aut_name }}</p>
-        <p class="time">4天前</p>
+        <p class="time">{{ article.pubdate | relativeTime }}</p>
       </div>
-      <van-button round size="small" type="info">+ 关注</van-button>
+      <van-button round size="small" type="info" @click.native="handleFollowed" :class="{'active-followed':followed}">{{Followed}}</van-button>
     </div>
     <div class="content">
       <div v-html="article.content"></div>
     </div>
     <van-divider>END</van-divider>
     <div class="zan">
-      <van-button round size="small" hairline type="primary" plain icon="good-job-o" @click.native="handleFabulous" :class="{ 'active-zan': attitude===1 }">{{ Fabulous }}</van-button>
+      <van-button round size="small" hairline type="primary" plain icon="good-job-o" @click.native="handleFabulous" :class="{ 'active-zan': attitude === 1 }">{{ Fabulous }}</van-button>
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <van-button round size="small" hairline type="danger" plain icon="delete" @click.native="handleLike" :class="{'active-like':like}">{{ Like}}</van-button>
+      <van-button round size="small" hairline type="danger" plain icon="delete" @click.native="handleLike" :class="{ 'active-like': like }">{{ Like }}</van-button>
     </div>
   </div>
 </template>
 
 <script>
-import { articleFabulous, articleNotFabulous, articleNotLike } from '@/api/articleDetails'
+import { articleFabulous, articleNotFabulous, articleNotLike, articleNotAttention, articleAttention } from '@/api/articleDetails'
 export default {
   name: 'ArticleDetails',
   components: {},
@@ -43,6 +43,9 @@ export default {
     },
     attitude: {
       type: Number
+    },
+    followed: {
+      type: Boolean
     }
   },
   data () {
@@ -69,6 +72,14 @@ export default {
       await (this.like && articleNotLike(id))
 
       this.like = !this.like
+    },
+    // 关注
+    async handleFollowed () {
+      const autId = this.article.aut_id
+      console.log(autId)
+      await (this.followed ? articleNotAttention(autId) : articleAttention(autId))
+
+      this.$emit('update:followed', !this.followed)
     }
   },
   computed: {
@@ -83,6 +94,10 @@ export default {
     // 点赞状态
     FabulousStatus () {
       return this.attitude === 1
+    },
+    // 关注状态
+    Followed () {
+      return this.followed ? '已关注' : '+ 关注'
     }
   },
   watch: {},
@@ -121,14 +136,24 @@ export default {
       background-color: #07c160;
     }
 
-    .active-like{
-            color: #fff;
+    .active-like {
+      color: #fff;
       background-color: #ee0a24;
     }
   }
   .author {
     padding: 10px 0;
     display: flex;
+
+    ::v-deep .van-button {
+      background-color: #fff;
+      color: #1989fa;
+    }
+
+    .active-followed {
+      background-color: #1989fa;
+      color: #fff;
+    }
 
     .img {
       width: 36px;

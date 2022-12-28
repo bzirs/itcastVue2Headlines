@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-26 22:37:31
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-27 22:23:34
+ * @LastEditTime: 2022-12-28 09:19:24
  * @FilePath: /vue2-itcast-headlines/src/api/articleDetails.js
  * @Description: 文章详情相关api
  * @
@@ -28,3 +28,9 @@ export const articleNotFabulous = target => request.delete(`/v1_0/article/liking
 
 // 不感兴趣
 export const articleNotLike = target => request.post('/v1_0/article/dislikes', { target })
+
+// 关注作者
+export const articleAttention = target => request.post('/v1_0/user/followings', { target })
+
+// 取消关注作者
+export const articleNotAttention = target => request.delete(`/v1_0/user/followings/${target}`)
