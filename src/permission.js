@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-28 09:50:01
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-28 18:05:33
+ * @LastEditTime: 2022-12-29 13:05:58
  * @FilePath: /vue2-itcast-headlines/src/permission.js
  * @Description:
  * @

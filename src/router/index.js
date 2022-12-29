@@ -2,7 +2,7 @@
  * @Author: bzirs
  * @Date: 2022-12-22 21:15:29
  * @LastEditors: bzirs
- * @LastEditTime: 2022-12-28 14:56:31
+ * @LastEditTime: 2022-12-29 13:08:56
  * @FilePath: /vue2-itcast-headlines/src/router/index.js
  * @Description: 路由
  * @
@@ -39,7 +39,8 @@ const routes = [
     ]
   },
   { path: '/search/:q', component: () => import('@/views/Search/SearchResult.vue') },
-  { path: '/edit', component: () => import('@/views/User/Edit.vue'), name: 'edit' }
+  { path: '/edit', component: () => import('@/views/User/Edit.vue'), name: 'edit' },
+  { path: '/chat', component: () => import('@/views/Chat'), name: 'chat' }
 
 ]
 
