@@ -40,7 +40,10 @@ const mutations = {
 const actions = {
   // 用户登录
   async toUserLogin ({ commit }, payload) {
-    const { data: { token } } = await userLogin(payload)
+    const { data: { token, refresh_token: reToken } } = await userLogin(payload)
+
+    // 刷新token存储本地
+    localStorage.setItem('refresh_token', reToken)
 
     commit('updateToken', token)
   },

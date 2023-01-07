@@ -9,16 +9,24 @@
  * @Copyright (c) 2022 by bzirs, All Rights Reserved.
  */
 
-import router from '@/router'
+// import router from '@/router'
 import store from '@/store'
 import axios from 'axios'
 import { Toast } from 'vant'
-import { rmToken } from './auth'
+// import { rmToken } from './auth'
 
 const request = axios.create({
   baseURL: 'http://geek.itheima.net',
   timeout: 5000
 })
+
+// 用于刷新token
+const refresh = axios.create({
+  baseURL: 'http://geek.itheima.net',
+  timeout: 5000
+})
+
+console.log(refresh)
 
 // 添加请求拦截器
 request.interceptors.request.use(function (config) {
@@ -41,12 +49,27 @@ request.interceptors.response.use(function (response) {
   // Toast.success(message)
   // 对响应数据做点什么
   return res
-}, function (error) {
+}, async function (error) {
   // 超出 2xx 范围的状态码都会触发该函数。
   const { response: { data: { message }, status } } = error
+  // 判断状态码 401 时刷新token
   if (status === 401) {
-    router.push('/login')
-    rmToken()
+    // router.push('/login')
+    // rmToken()
+
+    const { data: { data: { token } } } = await refresh({
+      method: 'put',
+      url: '/v1_0/authorizations',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('refresh_token')}`
+      }
+    })
+
+    // 更新 vuex 以及本地 token
+    store.commit('user/updateToken', token)
+
+    // 这里重新发送请求后  使用的是request  又会走上面的请求拦截  又会重新携带刚刚存的新的token
+    return request(error.response.config)
   }
 
   Toast.fail(message)
